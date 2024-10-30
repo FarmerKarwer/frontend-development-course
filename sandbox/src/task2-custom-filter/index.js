@@ -7,5 +7,21 @@
  * @returns {Array} Отфильтрованный массив
  */
 export const filter = (array, filterFn, inplace = false) => {
-    // Ваш код здесь
+    const result = []; // временный массив для хранения отфильтрованных элементов
+
+    for (let i = 0; i < array.length; i++) {
+        if (filterFn(array[i], i, array)) { // проверка, удовлетворяет ли элемент фильтрующему условию
+            result.push(array[i]);
+        }
+    }
+
+    if (inplace) {
+        array.length = 0;           // очищаем оригинальный массив
+        for (let i = 0; i < result.length; i++) {
+            array.push(result[i]);   // заполняем его отфильтрованными значениями
+        }
+        return array;                // возвращаем измененный исходный массив
+    } else {
+        return result;               // возвращаем новый массив, если inplace = false
+    }
 };
